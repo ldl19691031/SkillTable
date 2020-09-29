@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Skill Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-tables-2@2.1.3/dist/vue-tables-2.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+        integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <style>
+
+    </style>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>VFX Artist's Skills</h1>
+            <p>Mokoさん作ったVFX　Artists　のウェブページ版です。オンライン直接に評価はできます</p>
+            <p>https://effect.hatenablog.com/entry/2020/09/28/021100</p>
+        </div>
+        <div id="app" v-cloak>
+            <div class="row">
+                <div class="col-md-12">
+                    <v-client-table :columns="columns" v-model="data.tableData" :options="options">
+                        <!-- <select type="select" slot="score" slot-scope="{row, update}" v-model="row.score" @input="update">
+                            <option disabled value="">選択</option>
+                            <option>A</option>
+                            <option>B</option>
+                            <option>C</option>
+                            <option>D</option>
+                            <option>E</option>
+                          </select>
+                          <select type="select" slot="target" slot-scope="{row, update}" v-model="row.target" @input="update">
+                            <option disabled value="">選択</option>
+                            <option>A</option>
+                            <option>B</option>
+                            <option>C</option>
+                            <option>D</option>
+                            <option>E</option>
+                          </select> -->
+                        <div slot="score" slot-scope="{row, update, setEditing, isEditing, revertValue}">
+                            <span @click="setEditing(true)" v-if="!isEditing()">
+                                <a>{{row.score}}</a>
+                            </span>
+                            <span v-else>
+                                <select v-model="row.score">
+                                    <option disabled value="">選択</option>
+                                    <option value="A">A 業界で第一人者 / GDCで発表できる</option>
+                                    <option value="B">B 追及している / 社内でも抜きん出ている / CEDECで発表できる</option>
+                                    <option value="C">C お手本になれる / 教えることができる / 得意分野</option>
+                                    <option value="D">D ある程度使いこなす / 通常作業にあまり困らない</option>
+                                    <option value="E">E 全くない～最低限は備える</option>
+                                </select>
+                                <button type="button" class="btn btn-info btn-xs"
+                                    @click="update(row.score); setEditing(false);updateScore();">Submit</button>
+                                <button type="button" class="btn btn-default btn-xs"
+                                    @click="revertValue(); setEditing(false)">Cancel</button>
+                            </span>
+                        </div>
+                        <div slot="target" slot-scope="{row, update, setEditing, isEditing, revertValue}">
+                            <span @click="setEditing(true)" v-if="!isEditing()">
+                                <a>{{row.target}}</a>
+                            </span>
+                            <span v-else>
+                                <input type="text" v-model="row.target">
+                                <button type="button" class="btn btn-info btn-xs"
+                                    @click="update(row.target); setEditing(false);updateScore();">Submit</button>
+                                <button type="button" class="btn btn-default btn-xs"
+                                    @click="revertValue(); setEditing(false)">Cancel</button>
+                            </span>
+                        </div>
+                    </v-client-table>
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-6"><table class="table">
+                    <thead>
+                        <tr>
+                          <th>カテゴリ</th>
+                          <th>平均</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(value,key,index) in data.scoreData">
+                          <td>{{ key }}</td>
+                          <td>{{ value }}</td>
+                        </tr>
+                    </tbody>
+                </table></div>
+                <div class="col-md-6">
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+              </div>
+            
+            <h2>{{ data.scoreData }}</h2>
+        </div>
+    </div>
+    <script src="./data.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
