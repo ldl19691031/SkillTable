@@ -71,3 +71,7 @@ If you want, it will be much easier to modify the csv file in docs/itemTemplates
 
 For me, I used https://csvjson.com/csv2json
 
+# Some Other Things
+Please forgive my poor Japanese language level. I'm not a native Japanese speaker. 
+
+Also, please help me to improve this project. I also hope this may help your improvement of your skills.
